@@ -1,4 +1,6 @@
 var divider = 1;
+var maxIterations = 9;
+var looping = false;
 
 function setup() {
     createCanvas(400, 400);
@@ -21,10 +23,13 @@ function draw() {
             30
         );
         if (frameCount % 157 == 0) {
-            divider *= 2;
-            if (divider == 256) {
-                divider = 1;
-                background(255);
+            if (divider == 2 ** maxIterations) {
+                if (looping) {
+                    divider = 1;
+                    background(255);
+                }
+            } else {
+                divider *= 2;
             }
             return;
         }
@@ -37,6 +42,11 @@ function keyPressed() {
     }
     if (keyCode == LEFT_ARROW) {
         divider /= 2;
+        background(255);
+    }
+    if (keyCode == 32) {
+        divider = 1;
+        frameCount = 0;
         background(255);
     }
 }
